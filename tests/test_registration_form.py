@@ -1,6 +1,7 @@
 from selene import have
 from selene.support.shared import browser
 from selenium.webdriver import Keys
+import sys
 import os
 
 
@@ -15,7 +16,8 @@ def test_registration_form():
     browser.all('[for^=gender-radio-2]').element_by(have.text('Female')).click()
     browser.element('#userNumber').type('5551013000')
 
-    browser.element('#dateOfBirthInput').click().send_keys((Keys.CONTROL+'a'+Keys.NULL, '23 Feb 1964'))
+    browser.element('#dateOfBirthInput').send_keys((Keys.COMMAND if sys.platform == 'darwin'
+                                                    else Keys.CONTROL+'a'+Keys.NULL, '23 Feb 1964'))
 
     browser.element('#subjectsInput').type('Physics').press_enter()
     browser.element('[for="hobbies-checkbox-2"]').click()
